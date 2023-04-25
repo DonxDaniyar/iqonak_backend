@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
+use App\Http\Controllers\Api\V1\User\InstructionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,6 +24,8 @@ Route::group(['prefix' => 'v1'], function (){
         Route::post('logout',[LoginController::class, 'logout']);
         Route::group(['prefix' => 'user'], function (){
             Route::get('me', [LoginController::class, 'getMe']);
+            Route::get('/instruction/{instruction}', [InstructionController::class, 'getInstruction']);
+            Route::post('/sign/instruction/{instruction}', [InstructionController::class, 'signInstruction']);
         });
     });
 });
