@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\User\InstructionController;
+use App\Http\Controllers\Api\V1\User\RecordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,15 @@ Route::group(['prefix' => 'v1'], function (){
             Route::get('me', [LoginController::class, 'getMe']);
             Route::get('/instruction/{instruction}', [InstructionController::class, 'getInstruction']);
             Route::post('/sign/instruction/{instruction}', [InstructionController::class, 'signInstruction']);
+
+            Route::get('/vehicle_types/{organization}', [RecordController::class, 'getVehicleTypes']);
+            Route::get('/visit_purposes/{organization}', [RecordController::class, 'getVisitPurposes']);
+            Route::get('/place_of_directions/{organization}', [RecordController::class, 'getPlaceOfDirections']);
+
+            Route::get('/services/{organization}', [RecordController::class, 'getServices']);
+            Route::get('/tariffs/{service}', [RecordController::class, 'getTariffs']);
+
+            Route::post('/create_record/{organization}', [RecordController::class, 'createRecord']);
         });
     });
 });

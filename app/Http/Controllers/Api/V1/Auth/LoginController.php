@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\Auth;
 use App\Contracts\Auth\UserServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\User\UserResource;
 use App\Models\User;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
@@ -36,10 +37,8 @@ class LoginController extends Controller
     }
     public function getMe()
     {
-        return $this->respondWithSuccess([
-            'user' => User::with('roles')
+        return $this->respondWithSuccess(UserResource::make(User::with('roles')
                 ->where('id', auth()->id())
-                ->first()
-        ]);
+                ->first()));
     }
 }

@@ -34,6 +34,17 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('records', function (Blueprint $table) {
+            $table->dropForeign(['organization_id']);
+            $table->dropColumn('organization_id');
+            $table->dropForeign(['vehicle_id']);
+            $table->dropColumn('vehicle_id');
+            $table->dropForeign(['visit_purpose_id']);
+            $table->dropColumn('visit_purpose_id');
+            $table->dropForeign(['place_of_direction_id']);
+            $table->dropColumn('place_of_direction_id');
+            $table->dropForeign(['payment_note_id']);
+            $table->dropColumn('payment_note_id');
+        });
     }
 };

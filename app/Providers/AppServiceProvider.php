@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Contracts\Auth\UserServiceContract;
+use App\Contracts\User\RecordServiceContract;
 use App\Contracts\User\SignInstructionContract;
 use App\Services\Auth\UserService;
+use App\Services\User\RecordService;
 use App\Services\User\SignInstructionService;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
         }
         $this->app->bind(UserServiceContract::class, UserService::class);
         $this->app->bind(SignInstructionContract::class, SignInstructionService::class);
+        $this->app->bind(RecordServiceContract::class, RecordService::class);
     }
 
     /**
