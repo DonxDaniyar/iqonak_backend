@@ -49,7 +49,9 @@ class RecordController extends Controller
     }
     public function getServices(Organization $organization): JsonResponse
     {
-        return $this->respondWithSuccess(ServiceResource::collection(Service::where('organization_id', $organization->id)->get()));
+        return $this->respondWithSuccess(ServiceResource::collection(Service::with('tariffs')
+            ->where('organization_id', $organization->id)
+            ->get()));
     }
     public function getTariffs(Service $service): JsonResponse
     {

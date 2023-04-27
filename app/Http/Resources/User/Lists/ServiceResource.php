@@ -18,7 +18,15 @@ class ServiceResource extends JsonResource
             'id' => $this->id,
             'organization' => $this->whenLoaded('organization'),
             'name' => $this->name,
-            'is_required' => $this->is_required
+            'is_required' => $this->is_required,
+            'prices' => TariffResource::collection($this->whenLoaded('tariffs')),
+            'price' => $this->when($this->is_required, function (){
+                $sum = 0;
+                foreach ($this->tariffs as $tariff){
+                    $sum += $tariff->price;
+                }
+                return $sum;
+            })
         ];
     }
 }
