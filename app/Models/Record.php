@@ -9,4 +9,13 @@ class Record extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+
+    public function tariffs()
+    {
+        return $this->hasMany(RecordTariff::class);
+    }
+    public function vehicle()
+    {
+        return $this->hasOne(Vehicle::class, 'id', 'vehicle_id');
+    }
 }

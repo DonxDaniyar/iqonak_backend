@@ -25,7 +25,7 @@ class ServiceResource extends JsonResource
                 foreach ($this->tariffs as $tariff){
                     $sum += $tariff->price;
                 }
-                return $sum;
+                return (float)$sum;
             })
         ];
     }

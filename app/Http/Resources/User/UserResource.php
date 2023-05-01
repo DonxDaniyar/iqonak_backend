@@ -24,7 +24,8 @@ class UserResource extends JsonResource
             'phone_number' => $this->phone_number,
             'iin' => $this->iin,
             'roles' => $this->whenLoaded('roles'),
-            'is_signed' => UserInstructionAccept::where('user_id', $this->id)->exists()
+            'is_signed' => $this->when($this->roles->contains('name', 'user'), UserInstructionAccept::where('user_id', $this->id)->exists()),
+            'organizations' => $this->whenLoaded('organizations')
         ];
     }
 }

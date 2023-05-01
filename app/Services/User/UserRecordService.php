@@ -1,21 +1,21 @@
 <?php
 namespace App\Services\User;
 
-use App\Contracts\User\RecordServiceContract;
+use App\Contracts\User\UserRecordServiceContract;
 use App\Models\Organization;
 use App\Models\Record;
 use App\Models\RecordTariff;
 use App\Models\Service;
 use App\Models\Tariff;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
 
-class RecordService implements RecordServiceContract
+class UserRecordService implements UserRecordServiceContract
 {
     public function createRecord(Organization $organization, User $user, array $data)
     {
         $data['user_id'] = $user->id;
         $data['organization_id'] = $organization->id;
-        $data['entered_at'] = now();
         $record = Record::create($data);
         foreach (json_decode($data['services']) as $service){
             $service = Service::find($service);
@@ -75,5 +75,10 @@ class RecordService implements RecordServiceContract
             }
         }
         return $record;
+    }
+    public function getUserRecords(User $user, array $data): LengthAwarePaginator
+    {
+        $query = Record::query();
+        return $query->paginate(50);
     }
 }

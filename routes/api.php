@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\V1\Auth\RegisterController;
 use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\User\InstructionController;
 use App\Http\Controllers\Api\V1\User\RecordController;
+use App\Http\Controllers\Api\V1\Manager\ManagerController;
 
 /*
 |--------------------------------------------------------------------------
@@ -36,6 +37,12 @@ Route::group(['prefix' => 'v1'], function (){
             Route::get('/tariffs/{service}', [RecordController::class, 'getTariffs']);
 
             Route::post('/create_record/{organization}', [RecordController::class, 'createRecord']);
+            Route::get('/records', [RecordController::class, 'getRecords']);
+        });
+        Route::group(['prefix' => 'manager'], function(){
+            Route::get('/me', [ManagerController::class, 'getMe']);
+            Route::get('/records', [ManagerController::class, 'getRecords']);
+            Route::post('/records/create', [ManagerController::class, 'createRecord']);
         });
     });
 });

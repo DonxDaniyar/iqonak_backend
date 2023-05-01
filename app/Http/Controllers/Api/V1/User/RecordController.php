@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Api\V1\User;
 
-use App\Contracts\User\RecordServiceContract;
+use App\Contracts\User\UserRecordServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRecordRequest;
 use App\Http\Resources\User\Lists\PlaceOfDirectionResource;
@@ -27,7 +27,7 @@ class RecordController extends Controller
 
     private $recordService;
 
-    public function __construct(RecordServiceContract $recordService)
+    public function __construct(UserRecordServiceContract $recordService)
     {
         $this->recordService = $recordService;
     }
@@ -62,6 +62,15 @@ class RecordController extends Controller
         try {
             return $this->respondWithSuccess($this->recordService->createRecord($organization, Auth::user(), $request->validated()));
         }catch (\Exception $e) {
+            report($e);
+            return $this->respondError($e->getMessage());
+        }
+    }
+    public function getRecords()
+    {
+        try {
+            return $this->respondWithSuccess($this->recordService->getUserRecords(Auth::user(), []));
+        }catch (\Exception $e){
             report($e);
             return $this->respondError($e->getMessage());
         }

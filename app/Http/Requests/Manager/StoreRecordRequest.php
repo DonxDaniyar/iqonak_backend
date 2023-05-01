@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\Manager;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -33,7 +33,9 @@ class StoreRecordRequest extends FormRequest
             'place_of_direction_id' => ['required', 'exists:place_of_directions,id'],
             'services' => ['required'],
             'start_date' => ['required'],
-            'end_date' => ['required']
+            'end_date' => ['required'],
+            'manager_price' => ['required'],
+            'user_id' => ['required', 'exists:users,id']
         ];
     }
 }
