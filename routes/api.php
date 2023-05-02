@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\V1\Auth\LoginController;
 use App\Http\Controllers\Api\V1\User\InstructionController;
 use App\Http\Controllers\Api\V1\User\RecordController;
 use App\Http\Controllers\Api\V1\Manager\ManagerController;
+use App\Http\Controllers\Api\V1\Security\SecurityController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,12 @@ Route::group(['prefix' => 'v1'], function (){
             Route::get('/me', [ManagerController::class, 'getMe']);
             Route::get('/records', [ManagerController::class, 'getRecords']);
             Route::post('/records/create', [ManagerController::class, 'createRecord']);
+            Route::delete('/records/{record}/delete', [ManagerController::class, 'deleteRecord']);
+
+            Route::get('/search/iin', [ManagerController::class, 'searchByIIN']);
+        });
+        Route::group(['prefix' => 'security'], function(){
+            Route::get('/scan_qr/{uuid}', [SecurityController::class, 'scan_qr']);
         });
     });
 });

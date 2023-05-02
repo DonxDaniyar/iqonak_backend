@@ -6,6 +6,7 @@ use App\Contracts\Manager\ManagerRecordServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Manager\StoreRecordRequest;
 use App\Http\Resources\User\UserResource;
+use App\Models\Record;
 use App\Models\User;
 use F9Web\ApiResponseHelpers;
 use Illuminate\Http\Request;
@@ -36,5 +37,16 @@ class ManagerController extends Controller
     public function createRecord(StoreRecordRequest $request)
     {
         return $this->respondWithSuccess($this->recordService->createRecord(Auth::user(), $request->validated()));
+    }
+    public function deleteRecord(Record $record)
+    {
+        return $this->respondWithSuccess($this->recordService->deleteRecord($record));
+    }
+    public function searchByIIN(Request $request)
+    {
+        return $this->respondWithSuccess(UserResource::make(User::with('roles')
+            ->where('iin', $request->iin)
+            ->first()
+        ));
     }
 }

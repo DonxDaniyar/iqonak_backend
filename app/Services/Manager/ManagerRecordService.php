@@ -5,6 +5,7 @@ use App\Contracts\Manager\ManagerRecordServiceContract;
 use App\Models\Record;
 use App\Models\User;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\DB;
 
 class ManagerRecordService implements ManagerRecordServiceContract
 {
@@ -17,5 +18,15 @@ class ManagerRecordService implements ManagerRecordServiceContract
     {
         $data['manager_id'] = $user->id;
         return Record::create($data);
+    }
+    public function deleteRecord(Record $record): bool
+    {
+        return DB::transaction(function () use ($record){
+            foreach ($record->tariffs as $tariff) {
+                $tariff->delete();
+            }
+            $record->delete();
+            return true;
+        });
     }
 }

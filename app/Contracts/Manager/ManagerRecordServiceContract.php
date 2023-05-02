@@ -9,4 +9,5 @@ interface ManagerRecordServiceContract
 {
     public function getRecordsByFilter(array $data): LengthAwarePaginator;
     public function createRecord(User $user, array $data): Record;
+    public function deleteRecord(Record $record): bool;
 }
