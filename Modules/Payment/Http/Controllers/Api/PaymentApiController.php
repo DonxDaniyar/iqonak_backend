@@ -26,7 +26,7 @@ class PaymentApiController extends Controller
         $request->validate([
             'pg_order_id' => 'required|integer',
             'pg_payment_id' => 'required|integer',
-            'pg_amount' => 'required|integer',
+            'pg_amount' => 'required|decimal',
             'pg_currency' => 'required|string|max:3',
             'pg_sig' => 'required'
         ]);

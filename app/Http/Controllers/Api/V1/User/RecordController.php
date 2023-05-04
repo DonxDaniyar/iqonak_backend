@@ -95,7 +95,8 @@ class RecordController extends Controller
             ->load('payment_note')
             ->load('place_of_direction')
             ->load('checkpoint')
-            ->load('vehicle.vehicleType')));
+            ->load('vehicle.vehicleType'))
+            ->load('record_status'));
     }
     public function getQrImage(Record $record)
     {

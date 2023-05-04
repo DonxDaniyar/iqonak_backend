@@ -19,6 +19,9 @@ class RecordResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
+            'adult_people_in_group' => $this->adult_people_in_group,
+            'children_people_in_group' => $this->children_people_in_group,
+            'student_in_group' => $this->student_in_group,
             'user' => UserResource::make($this->whenLoaded('user')),
             'organization_id' => $this->organization_id,
             'organization' => $this->whenLoaded('organization'),
