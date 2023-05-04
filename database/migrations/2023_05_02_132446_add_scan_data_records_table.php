@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::table('records', function (Blueprint $table) {
             $table->dateTime('scanned_at')->nullable();
             $table->uuid('record_uuid')->nullable();
+            $table->unsignedBigInteger('checkpoint_id')->nullable();
+            $table->foreign('checkpoint_id')->references('id')->on('checkpoints');
         });
     }
 
@@ -29,6 +31,8 @@ return new class extends Migration
         Schema::table('records', function (Blueprint $table) {
             $table->dropColumn('scanned_at');
             $table->dropColumn('record_uuid');
+            $table->dropForeign(['checkpoint_id']);
+            $table->dropColumn('checkpoint_id');
         });
     }
 };

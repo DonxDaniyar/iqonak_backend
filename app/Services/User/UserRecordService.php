@@ -8,6 +8,7 @@ use App\Models\RecordTariff;
 use App\Models\Service;
 use App\Models\Tariff;
 use App\Models\User;
+use App\Models\Vehicle;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRecordService implements UserRecordServiceContract
@@ -16,6 +17,10 @@ class UserRecordService implements UserRecordServiceContract
     {
         $data['user_id'] = $user->id;
         $data['organization_id'] = $organization->id;
+        if(!$data['vehicle_id']){
+            $vehicle = $this->createVehicle($data);
+            $data['vehicle_id'] = $vehicle->id;
+        }
         $record = Record::create($data);
         foreach (json_decode($data['services']) as $service){
             $service = Service::find($service);
@@ -29,7 +34,7 @@ class UserRecordService implements UserRecordServiceContract
                     RecordTariff::create([
                         'record_id'=>$record->id,
                         'tariff_id' => $tariff->id,
-                        'price' => $tariff->price * ($data['children_people_in_group'] + $data['student_in_group'] + $data['adult_people_in_group']),
+                        'price' => ($tariff->price * ($data['children_people_in_group'] + $data['student_in_group'] + $data['adult_people_in_group'])) * $data['tenure'],
                     ]);
                 }
                 continue;
@@ -43,7 +48,7 @@ class UserRecordService implements UserRecordServiceContract
                     RecordTariff::create([
                         'record_id'=>$record->id,
                         'tariff_id' => $tariff->id,
-                        'price' => $tariff->price * $data['children_people_in_group'],
+                        'price' => ($tariff->price * $data['children_people_in_group']) * $data['tenure'],
                     ]);
                 }
             }
@@ -56,7 +61,7 @@ class UserRecordService implements UserRecordServiceContract
                     RecordTariff::create([
                         'record_id'=>$record->id,
                         'tariff_id' => $tariff->id,
-                        'price' => $tariff->price * $data['student_in_group'],
+                        'price' => ($tariff->price * $data['student_in_group']) * $data['tenure'],
                     ]);
                 }
             }
@@ -69,7 +74,7 @@ class UserRecordService implements UserRecordServiceContract
                     RecordTariff::create([
                         'record_id'=>$record->id,
                         'tariff_id' => $tariff->id,
-                        'price' => $tariff->price * $data['adult_people_in_group'],
+                        'price' => ($tariff->price * $data['adult_people_in_group']) * $data['tenure'],
                     ]);
                 }
             }
@@ -80,5 +85,9 @@ class UserRecordService implements UserRecordServiceContract
     {
         $query = Record::query();
         return $query->paginate(50);
+    }
+    public function createVehicle(array $data): Vehicle
+    {
+        return Vehicle::create($data);
     }
 }

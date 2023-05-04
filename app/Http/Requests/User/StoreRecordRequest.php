@@ -28,12 +28,15 @@ class StoreRecordRequest extends FormRequest
             'children_people_in_group' => ['nullable'],
             'student_in_group' => ['nullable'],
             'tenure' => ['required'],
-            'vehicle_id' => ['nullable', 'exists:vehicles,id'],
+//            'vehicle_id' => ['nullable', 'exists:vehicles,id'],
             'visit_purpose_id' => ['required', 'exists:visit_purposes,id'],
             'place_of_direction_id' => ['required', 'exists:place_of_directions,id'],
             'services' => ['required'],
             'start_date' => ['required'],
-            'end_date' => ['required']
+            'end_date' => ['required'],
+            'vehicle_type_id' => ['nullable', 'exists:vehicle_types,id'],
+            'car_brand' => ['nullable', 'string'],
+            'number' => ['nullable', 'string']
         ];
     }
 }

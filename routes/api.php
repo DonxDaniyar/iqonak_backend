@@ -31,6 +31,9 @@ Route::group(['prefix' => 'v1'], function (){
             Route::post('/sign/instruction/{instruction}', [InstructionController::class, 'signInstruction']);
 
             Route::get('/vehicle_types/{organization}', [RecordController::class, 'getVehicleTypes']);
+
+            Route::get('/vehicles', [RecordController::class, 'getUserVehicles']);
+
             Route::get('/visit_purposes/{organization}', [RecordController::class, 'getVisitPurposes']);
             Route::get('/place_of_directions/{organization}', [RecordController::class, 'getPlaceOfDirections']);
 

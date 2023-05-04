@@ -35,7 +35,8 @@ class StoreRecordRequest extends FormRequest
             'start_date' => ['required'],
             'end_date' => ['required'],
             'manager_price' => ['required'],
-            'user_id' => ['required', 'exists:users,id']
+            'user_id' => ['required', 'exists:users,id'],
+            'checkpoint_id' => ['nullable']
         ];
     }
 }

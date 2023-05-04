@@ -14,6 +14,7 @@ use App\Models\Organization;
 use App\Models\PlaceOfDirection;
 use App\Models\Service;
 use App\Models\Tariff;
+use App\Models\Vehicle;
 use App\Models\VehicleType;
 use App\Models\VisitPurpose;
 use F9Web\ApiResponseHelpers;
@@ -35,7 +36,8 @@ class RecordController extends Controller
     public function getVehicleTypes(Organization $organization): JsonResponse
     {
         return $this->respondWithSuccess(VehicleTypeResource::collection(VehicleType::where('organization_id', $organization->id)
-        ->get()));
+            ->orderBy('id', 'ASC')
+            ->get()));
     }
     public function getVisitPurposes(Organization $organization): JsonResponse
     {
@@ -59,12 +61,12 @@ class RecordController extends Controller
     }
     public function createRecord(Organization $organization, StoreRecordRequest $request)
     {
-        try {
-            return $this->respondWithSuccess($this->recordService->createRecord($organization, Auth::user(), $request->validated()));
-        }catch (\Exception $e) {
-            report($e);
-            return $this->respondError($e->getMessage());
-        }
+//        try {
+            return $this->respondWithSuccess($this->recordService->createRecord($organization, Auth::user(), $request->all()));
+//        }catch (\Exception $e) {
+//            report($e);
+//            return $this->respondError($e->getMessage());
+//        }
     }
     public function getRecords()
     {
@@ -74,5 +76,11 @@ class RecordController extends Controller
             report($e);
             return $this->respondError($e->getMessage());
         }
+    }
+    public function getUserVehicles(Request $request)
+    {
+        return $this->respondWithSuccess(Vehicle::where('user_id', \auth()->id())
+        ->where('vehicle_type_id', $request->vehicle_type_id)
+        ->get());
     }
 }
