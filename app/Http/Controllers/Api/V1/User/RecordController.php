@@ -14,6 +14,7 @@ use App\Http\Resources\User\Lists\VisitPurposeResource;
 use App\Http\Resources\User\UserVehicleResource;
 use App\Models\Organization;
 use App\Models\PlaceOfDirection;
+use App\Models\Record;
 use App\Models\Service;
 use App\Models\Tariff;
 use App\Models\Vehicle;
@@ -23,6 +24,7 @@ use F9Web\ApiResponseHelpers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class RecordController extends Controller
 {
@@ -84,5 +86,22 @@ class RecordController extends Controller
     {
         return $this->respondWithSuccess(UserVehicleResource::collection(Vehicle::where('user_id', \auth()->id())
         ->get()));
+    }
+    public function getRecord(Record $record)
+    {
+        return $this->respondWithSuccess(RecordResource::make($record->load('vehicle')
+            ->load('organization')
+            ->load('visit_purpose')
+            ->load('payment_note')
+            ->load('place_of_direction')
+            ->load('checkpoint')
+            ->load('vehicle.vehicleType')));
+    }
+    public function getQrImage(Record $record)
+    {
+        return QrCode::size(200)
+            ->backgroundColor(255, 255, 255)
+            ->gradient(2, 119, 187,0, 0, 0, 'vertical')
+            ->generate($record->record_uuid);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Http\Resources\Record;
 
 use App\Http\Resources\User\UserResource;
+use App\Http\Resources\User\UserVehicleResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class RecordResource extends JsonResource
@@ -22,7 +23,7 @@ class RecordResource extends JsonResource
             'organization_id' => $this->organization_id,
             'organization' => $this->whenLoaded('organization'),
             'vehicle_id' => $this->vehicle_id,
-            'vehicle' => $this->whenLoaded('vehicle'),
+            'vehicle' => UserVehicleResource::make($this->whenLoaded('vehicle')),
             'visit_purpose_id' => $this->visit_purpose_id,
             'visit_purpose' => $this->whenLoaded('visit_purpose'),
             'place_of_direction_id' => $this->place_of_direction_id,

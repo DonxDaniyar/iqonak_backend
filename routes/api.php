@@ -41,7 +41,11 @@ Route::group(['prefix' => 'v1'], function (){
             Route::get('/tariffs/{service}', [RecordController::class, 'getTariffs']);
 
             Route::post('/create_record/{organization}', [RecordController::class, 'createRecord']);
+
             Route::get('/records', [RecordController::class, 'getRecords']);
+            Route::get('/records/{record}', [RecordController::class, 'getRecord']);
+
+            Route::get('/qr_image/{record}', [RecordController::class, 'getQrImage']);
         });
         Route::group(['prefix' => 'manager'], function(){
             Route::get('/me', [ManagerController::class, 'getMe']);

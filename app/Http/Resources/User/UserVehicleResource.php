@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\User;
 
+use App\Http\Resources\User\Lists\VehicleTypeResource;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserVehicleResource extends JsonResource
@@ -17,6 +18,7 @@ class UserVehicleResource extends JsonResource
         return [
             'id' => $this->id,
             'vehicle_type_id' => $this->vehicle_type_id,
+            'vehicle_type' => VehicleTypeResource::make($this->whenLoaded('vehicleType')),
             'value' => $this->car_brand,
             'number' => $this->number
         ];
