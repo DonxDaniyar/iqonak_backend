@@ -19,8 +19,13 @@ class UserRecordService implements UserRecordServiceContract
         $data['user_id'] = $user->id;
         $data['organization_id'] = $organization->id;
         if (!$data['vehicle_id']) {
-            $vehicle = $this->createVehicle($data);
-            $data['vehicle_id'] = $vehicle->id;
+            if($data['car_brand'] && $data['number']){
+                $vehicle = $this->createVehicle($data);
+                $data['vehicle_id'] = $vehicle->id;
+            }
+            else{
+                unset($data['vehicle_id']);
+            }
         }
         $record = Record::create($data);
         foreach (json_decode($data['services']) as $service) {
