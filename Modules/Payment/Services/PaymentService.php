@@ -20,7 +20,7 @@ class PaymentService implements PaymentServiceContract
         $salt = Str::random(10);
         $order = Order::create([
             'user_id' => $record->user_id,
-            'course_id' => $record->id,
+            'record_id' => $record->id,
             'payment_amount' => $record->tariffs()->sum('price') + ($record->vehicle ? $record->vehicle->vehicleType->price : 0) * $record->tenure,
             'payment_salt' => $salt
         ]);
