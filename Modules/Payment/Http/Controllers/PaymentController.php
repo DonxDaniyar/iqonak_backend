@@ -33,7 +33,7 @@ class PaymentController extends Controller
         $order = Order::create([
             'user_id' => $user->id,
             'course_id' => $record->id,
-            'payment_amount' => $record->tariffs()->sum('price') + $record->vehicle ? $record->vehicle->vehicleType->price : 0,
+            'payment_amount' => $record->tariffs()->sum('price') + ($record->vehicle ? $record->vehicle->vehicleType->price : 0) * $record->tenure,
             'payment_salt' => $salt
         ]);
 
