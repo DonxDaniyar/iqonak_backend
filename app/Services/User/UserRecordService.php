@@ -99,6 +99,7 @@ class UserRecordService implements UserRecordServiceContract
             ->with('place_of_direction')
             ->with('checkpoint')
             ->with('record_status');
+        $query->where('user_id', $user->id);
         return $query->paginate(50);
     }
 
