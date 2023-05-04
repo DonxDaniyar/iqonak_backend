@@ -35,7 +35,10 @@ class PaymentApiController extends Controller
             ->first();
 
         if ($order && $request->pg_payment_date) {
-
+            $record = Record::find($order->record_id);
+            $record->update([
+                'record_status_id' => 3
+            ]);
             $order->update([
                 'payment_id' => $request->pg_payment_id,
                 'payment_user_contact_email' => $request->pg_user_contact_email,

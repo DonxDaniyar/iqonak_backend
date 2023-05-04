@@ -24,11 +24,10 @@ class PaymentService implements PaymentServiceContract
             'payment_amount' => $record->tariffs()->sum('price') + ($record->vehicle ? $record->vehicle->vehicleType->price : 0) * $record->tenure,
             'payment_salt' => $salt
         ]);
-
         $request_method = 'POST';
         $pg_testing_mode = 1;
-        $result_url = "https://bayangnpp.kz/api";
-        $success_url = "https://bayangnpp.kz/api/v1";
+        $result_url = route('payment.api.save');
+        $success_url = route('welcome');
 
         $pg_request = [
             'pg_merchant_id' => $this->mercaht_id,
@@ -52,6 +51,9 @@ class PaymentService implements PaymentServiceContract
         unset($pg_request[0], $pg_request[1]);
         $query = http_build_query($pg_request);
 
+        $record->update([
+            'record_status_id' => 2
+        ]);
         $order->update([
             'payment_sig' => $pg_request['pg_sig'],
             'payment_link' => $query,

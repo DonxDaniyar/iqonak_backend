@@ -18,6 +18,7 @@ class UserRecordService implements UserRecordServiceContract
     {
         $data['user_id'] = $user->id;
         $data['organization_id'] = $organization->id;
+        $data['record_status_id'] = 1;
         if (!$data['vehicle_id']) {
             if($data['car_brand'] && $data['number']){
                 $vehicle = $this->createVehicle($data);
