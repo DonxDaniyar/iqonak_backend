@@ -10,6 +10,7 @@ use App\Http\Resources\User\Lists\ServiceResource;
 use App\Http\Resources\User\Lists\TariffResource;
 use App\Http\Resources\User\Lists\VehicleTypeResource;
 use App\Http\Resources\User\Lists\VisitPurposeResource;
+use App\Http\Resources\User\UserVehicleResource;
 use App\Models\Organization;
 use App\Models\PlaceOfDirection;
 use App\Models\Service;
@@ -61,12 +62,12 @@ class RecordController extends Controller
     }
     public function createRecord(Organization $organization, StoreRecordRequest $request)
     {
-//        try {
+        try {
             return $this->respondWithSuccess($this->recordService->createRecord($organization, Auth::user(), $request->all()));
-//        }catch (\Exception $e) {
-//            report($e);
-//            return $this->respondError($e->getMessage());
-//        }
+        }catch (\Exception $e) {
+            report($e);
+            return $this->respondError($e->getMessage());
+        }
     }
     public function getRecords()
     {
@@ -79,8 +80,8 @@ class RecordController extends Controller
     }
     public function getUserVehicles(Request $request)
     {
-        return $this->respondWithSuccess(Vehicle::where('user_id', \auth()->id())
+        return $this->respondWithSuccess(UserVehicleResource::collection(Vehicle::where('user_id', \auth()->id())
         ->where('vehicle_type_id', $request->vehicle_type_id)
-        ->get());
+        ->get()));
     }
 }
