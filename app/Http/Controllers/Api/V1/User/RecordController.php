@@ -79,10 +79,9 @@ class RecordController extends Controller
             return $this->respondError($e->getMessage());
         }
     }
-    public function getUserVehicles(Request $request)
+    public function getUserVehicles()
     {
         return $this->respondWithSuccess(UserVehicleResource::collection(Vehicle::where('user_id', \auth()->id())
-        ->where('vehicle_type_id', $request->vehicle_type_id)
         ->get()));
     }
 }
