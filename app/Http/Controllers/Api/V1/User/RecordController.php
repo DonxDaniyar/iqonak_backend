@@ -74,7 +74,7 @@ class RecordController extends Controller
     public function getRecords()
     {
         try {
-            return $this->respondWithSuccess(RecordResource::collection($this->recordService->getUserRecords(Auth::user(), [])));
+            return $this->respondWithSuccess(RecordResource::collection($this->recordService->getUserRecords(Auth::user(), []))->resource);
         }catch (\Exception $e){
             report($e);
             return $this->respondError($e->getMessage());
