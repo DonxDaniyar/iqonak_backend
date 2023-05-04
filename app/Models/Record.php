@@ -53,4 +53,8 @@ class Record extends Model
     {
         return $this->belongsTo(Checkpoint::class);
     }
+    public function record_status()
+    {
+        return $this->belongsTo(RecordStatus::class);
+    }
 }

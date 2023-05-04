@@ -97,7 +97,8 @@ class UserRecordService implements UserRecordServiceContract
             ->with('visit_purpose')
             ->with('payment_note')
             ->with('place_of_direction')
-            ->with('checkpoint');
+            ->with('checkpoint')
+            ->with('record_status');
         return $query->paginate(50);
     }
 

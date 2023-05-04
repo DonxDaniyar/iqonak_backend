@@ -39,7 +39,9 @@ class RecordResource extends JsonResource
             'record_uuid' => $this->record_uuid,
             'checkpoint_id' => $this->checkpoint_id,
             'checkpoint' => $this->whenLoaded('checkpoint_id'),
-            'tenure' => $this->tenure
+            'tenure' => $this->tenure,
+            'record_status_id' => $this->record_status_id,
+            'record_status' => $this->whenLoaded('record_status')
         ];
     }
 }
