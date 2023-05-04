@@ -55,8 +55,8 @@ Route::group(['prefix' => 'v1'], function (){
 
             Route::get('/search/iin', [ManagerController::class, 'searchByIIN']);
         });
-        Route::group(['prefix' => 'security'], function(){
-            Route::get('/scan_qr/{uuid}', [SecurityController::class, 'scan_qr']);
+        Route::group(['prefix' => 'security', 'as'=> 'security.'], function(){
+            Route::get('/scan_qr/{uuid}', [SecurityController::class, 'scan_qr'])->name('scan.qr');
         });
     });
 });

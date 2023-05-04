@@ -100,9 +100,8 @@ class RecordController extends Controller
     }
     public function getQrImage(Record $record)
     {
-        return QrCode::size(200)
+        return base64_encode(QrCode::format('png')->size(200)
             ->backgroundColor(255, 255, 255)
-            ->gradient(2, 119, 187,0, 0, 0, 'vertical')
-            ->generate($record->record_uuid);
+            ->generate(route('security.scan.qr', ['uuid' => $record->record_uuid])));
     }
 }
