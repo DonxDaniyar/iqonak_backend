@@ -32,6 +32,7 @@ class RecordController extends Controller
     public function __construct(UserRecordServiceContract $recordService)
     {
         $this->recordService = $recordService;
+        $this->setDefaultSuccessResponse([]);
     }
 
     public function getVehicleTypes(Organization $organization): JsonResponse
