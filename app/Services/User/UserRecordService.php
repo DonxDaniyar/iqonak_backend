@@ -46,7 +46,7 @@ class UserRecordService implements UserRecordServiceContract
                 }
                 continue;
             }
-            if (isset($data['children_people_in_group'])) {
+            if (isset($data['children_people_in_group']) && $data['children_people_in_group'] > 0) {
                 $tariff = Tariff::where('service_id', $service->id)
                     ->where('is_kid', 1)
                     ->first();
@@ -59,7 +59,7 @@ class UserRecordService implements UserRecordServiceContract
                     ]);
                 }
             }
-            if (isset($data['student_in_group'])) {
+            if (isset($data['student_in_group']) && $data['student_in_group'] > 0) {
                 $tariff = Tariff::where('service_id', $service->id)
                     ->where('is_student', 1)
                     ->first();
@@ -72,7 +72,7 @@ class UserRecordService implements UserRecordServiceContract
                     ]);
                 }
             }
-            if (isset($data['adult_people_in_group'])) {
+            if (isset($data['adult_people_in_group']) && $data['adult_people_in_group'] > 0) {
                 $tariff = Tariff::where('service_id', $service->id)
                     ->where('is_adult', 1)
                     ->first();
