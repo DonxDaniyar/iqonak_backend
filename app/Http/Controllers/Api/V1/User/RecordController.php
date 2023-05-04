@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1\User;
 use App\Contracts\User\UserRecordServiceContract;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\StoreRecordRequest;
+use App\Http\Resources\Record\RecordResource;
 use App\Http\Resources\User\Lists\PlaceOfDirectionResource;
 use App\Http\Resources\User\Lists\ServiceResource;
 use App\Http\Resources\User\Lists\TariffResource;
@@ -73,7 +74,7 @@ class RecordController extends Controller
     public function getRecords()
     {
         try {
-            return $this->respondWithSuccess($this->recordService->getUserRecords(Auth::user(), []));
+            return $this->respondWithSuccess(RecordResource::collection($this->recordService->getUserRecords(Auth::user(), [])));
         }catch (\Exception $e){
             report($e);
             return $this->respondError($e->getMessage());

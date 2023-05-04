@@ -21,7 +21,7 @@ class PaymentService implements PaymentServiceContract
         $order = Order::create([
             'user_id' => $record->user_id,
             'course_id' => $record->id,
-            'payment_amount' => (int)$record->tariffs()->sum('price') + (int)($record->vehicle ? $record->vehicle->vehicleType->price : 0),
+            'payment_amount' => $record->tariffs()->sum('price') + ($record->vehicle ? $record->vehicle->vehicleType->price : 0) * $record->tenure,
             'payment_salt' => $salt
         ]);
 
