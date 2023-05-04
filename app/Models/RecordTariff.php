@@ -9,4 +9,8 @@ class RecordTariff extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
+    public function tariff()
+    {
+        return $this->belongsTo(Tariff::class);
+    }
 }

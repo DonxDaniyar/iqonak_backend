@@ -43,8 +43,10 @@ class RecordResource extends JsonResource
             'checkpoint_id' => $this->checkpoint_id,
             'checkpoint' => $this->whenLoaded('checkpoint_id'),
             'tenure' => $this->tenure,
+            'calculate_price' => $this->tariffs->sum('price') + ($this->vehicle ? $this->vehicle->vehicleType->price : 0) * $this->tenure,
             'record_status_id' => $this->record_status_id,
-            'record_status' => $this->whenLoaded('record_status')
+            'record_status' => $this->whenLoaded('record_status'),
+            'tariffs' => $this->whenLoaded('tariffs'),
         ];
     }
 }

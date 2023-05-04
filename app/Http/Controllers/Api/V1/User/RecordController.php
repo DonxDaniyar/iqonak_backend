@@ -87,7 +87,7 @@ class RecordController extends Controller
         return $this->respondWithSuccess(UserVehicleResource::collection(Vehicle::where('user_id', \auth()->id())
         ->get()));
     }
-    public function getRecord(Record $record)
+    public function getRecord(Record $record): JsonResponse
     {
         return $this->respondWithSuccess(RecordResource::make($record->load('vehicle')
             ->load('organization')
@@ -95,12 +95,16 @@ class RecordController extends Controller
             ->load('payment_note')
             ->load('place_of_direction')
             ->load('checkpoint')
-            ->load('vehicle.vehicleType'))
-            ->load('record_status'));
+            ->load('vehicle.vehicleType')
+            ->load('record_status')
+            ->load('tariffs')
+            ->load('tariffs.tariff')
+            ->load('tariffs.tariff.service')));
     }
     public function getQrImage(Record $record)
     {
-        return base64_encode(QrCode::format('png')->size(200)
+        return base64_encode(QrCode::format('png')
+            ->size(300)
             ->backgroundColor(255, 255, 255)
             ->generate(route('security.scan.qr', ['uuid' => $record->record_uuid])));
     }
