@@ -9,6 +9,7 @@ use App\Http\Resources\User\UserResource;
 use App\Models\Record;
 use App\Models\User;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,31 +19,61 @@ class ManagerController extends Controller
 
     private $recordService;
 
+    /**
+     * @param ManagerRecordServiceContract $recordService
+     */
     public function __construct(ManagerRecordServiceContract $recordService)
     {
         $this->recordService = $recordService;
     }
 
-    public function getMe()
+    /**
+     * Method returns manager information with organization
+     * @return JsonResponse
+     */
+    public function getMe(): JsonResponse
     {
         return $this->respondWithSuccess(UserResource::make(User::with('roles')
             ->with('organizations')
             ->where('id', auth()->id())
             ->first()));
     }
-    public function getRecords()
+
+    /**
+     * Method returns records
+     * @return JsonResponse
+     */
+    public function getRecords(): JsonResponse
     {
         return $this->respondWithSuccess($this->recordService->getRecordsByFilter([]));
     }
-    public function createRecord(StoreRecordRequest $request)
+
+    /**
+     * Method creates record
+     * @param StoreRecordRequest $request
+     * @return JsonResponse
+     */
+    public function createRecord(StoreRecordRequest $request): JsonResponse
     {
         return $this->respondWithSuccess($this->recordService->createRecord(Auth::user(), $request->validated()));
     }
-    public function deleteRecord(Record $record)
+
+    /**
+     * Method deletes record
+     * @param Record $record
+     * @return JsonResponse
+     */
+    public function deleteRecord(Record $record): JsonResponse
     {
         return $this->respondWithSuccess($this->recordService->deleteRecord($record));
     }
-    public function searchByIIN(Request $request)
+
+    /**
+     * Method returns user by IIN
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function searchByIIN(Request $request): JsonResponse
     {
         return $this->respondWithSuccess(UserResource::make(User::with('roles')
             ->where('iin', $request->iin)

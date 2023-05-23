@@ -25,6 +25,7 @@ class AppServiceProvider extends ServiceProvider
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
             $this->app->register(TelescopeServiceProvider::class);
         }
+        //Service binding operations
         $this->app->bind(UserServiceContract::class, UserService::class);
         $this->app->bind(SignInstructionContract::class, SignInstructionService::class);
         $this->app->bind(UserRecordServiceContract::class, UserRecordService::class);

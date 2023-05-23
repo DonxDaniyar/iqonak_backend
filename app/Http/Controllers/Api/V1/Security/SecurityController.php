@@ -6,12 +6,19 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\Record\RecordResource;
 use App\Models\Record;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SecurityController extends Controller
 {
     use ApiResponseHelpers;
-    public function scan_qr($uuid)
+
+    /**
+     * Method scans qr image by security
+     * @param $uuid
+     * @return JsonResponse
+     */
+    public function scan_qr($uuid): JsonResponse
     {
         $record = Record::where('record_uuid', $uuid)->first();
         if(!$record){

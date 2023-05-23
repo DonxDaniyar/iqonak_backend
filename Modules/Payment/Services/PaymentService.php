@@ -3,19 +3,30 @@ namespace Modules\Payment\Services;
 
 use App\Models\Record;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Modules\Payment\Contracts\PaymentServiceContract;
 use Modules\Payment\Models\Order;
 
 class PaymentService implements PaymentServiceContract
 {
-    protected $mercaht_id = 520501;
+    private $mercaht_id;
 
-    protected $secret_key = 'eicgATVNHvw9YJUh';
+    private $secret_key;
 
+    public function __construct()
+    {
+        $this->mercaht_id = config('payment::paybox_merchant_id');
+        $this->secret_key = config('payment::paybox_merchant_secret');
+    }
+    /**
+     * Method returns link
+     * @param Record $record
+     * @param Request $request
+     * @return string
+     */
     public function request_link(Record $record, Request $request)
     {
+        //TODO Change text to lang alias
         $description = "Оплата посещения национального парка";
         $salt = Str::random(10);
         $order = Order::create([

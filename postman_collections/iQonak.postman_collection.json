@@ -1,0 +1,1350 @@
+{
+	"info": {
+		"_postman_id": "c5723149-3423-4bd5-aedf-f05c9c35f468",
+		"name": "iQonak",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "3057550",
+		"_collection_link": "https://lunar-capsule-26211.postman.co/workspace/Dreamstart~c8ef504f-3e3b-406b-923d-75b7337626c8/collection/3057550-c5723149-3423-4bd5-aedf-f05c9c35f468?action=share&creator=3057550&source=collection_link"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"protocolProfileBehavior": {
+						"followRedirects": true
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "first_name",
+									"value": "Baizhaksynov",
+									"type": "text"
+								},
+								{
+									"key": "last_name",
+									"value": "Daniyar",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "donzzzdaniyar@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "qwe123qwe",
+									"type": "text"
+								},
+								{
+									"key": "phone_number",
+									"value": "+7 (747) 149-08-23",
+									"type": "text"
+								},
+								{
+									"key": "iin",
+									"value": "940429351326",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/sign-up?first_name=Baizhaksynov&last_name=Daniyar&email=donzzzdaniyar@gmail.com&password=qwe123qwe&phone_number=+7(747)149-08-23&iin=940429351326",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sign-up"
+							],
+							"query": [
+								{
+									"key": "first_name",
+									"value": "Baizhaksynov"
+								},
+								{
+									"key": "last_name",
+									"value": "Daniyar"
+								},
+								{
+									"key": "email",
+									"value": "donzzzdaniyar@gmail.com"
+								},
+								{
+									"key": "password",
+									"value": "qwe123qwe"
+								},
+								{
+									"key": "phone_number",
+									"value": "+7(747)149-08-23"
+								},
+								{
+									"key": "iin",
+									"value": "940429351326"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);\r",
+									"pm.collectionVariables.set(\"access_token\", jsonData.access_token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"qwe123qwe\",\r\n    \"phone_number\": \"+7 (747) 149-08-23\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/sign-in",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"sign-in"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/logout",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Instruction",
+					"item": [
+						{
+							"name": "Get Instruction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/instruction/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"instruction",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Sign Instruction",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "sign_image",
+											"value": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAApgAAAKYB3X3/OAAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAANCSURBVEiJtZZPbBtFFMZ/M7ubXdtdb1xSFyeilBapySVU8h8OoFaooFSqiihIVIpQBKci6KEg9Q6H9kovIHoCIVQJJCKE1ENFjnAgcaSGC6rEnxBwA04Tx43t2FnvDAfjkNibxgHxnWb2e/u992bee7tCa00YFsffekFY+nUzFtjW0LrvjRXrCDIAaPLlW0nHL0SsZtVoaF98mLrx3pdhOqLtYPHChahZcYYO7KvPFxvRl5XPp1sN3adWiD1ZAqD6XYK1b/dvE5IWryTt2udLFedwc1+9kLp+vbbpoDh+6TklxBeAi9TL0taeWpdmZzQDry0AcO+jQ12RyohqqoYoo8RDwJrU+qXkjWtfi8Xxt58BdQuwQs9qC/afLwCw8tnQbqYAPsgxE1S6F3EAIXux2oQFKm0ihMsOF71dHYx+f3NND68ghCu1YIoePPQN1pGRABkJ6Bus96CutRZMydTl+TvuiRW1m3n0eDl0vRPcEysqdXn+jsQPsrHMquGeXEaY4Yk4wxWcY5V/9scqOMOVUFthatyTy8QyqwZ+kDURKoMWxNKr2EeqVKcTNOajqKoBgOE28U4tdQl5p5bwCw7BWquaZSzAPlwjlithJtp3pTImSqQRrb2Z8PHGigD4RZuNX6JYj6wj7O4TFLbCO/Mn/m8R+h6rYSUb3ekokRY6f/YukArN979jcW+V/S8g0eT/N3VN3kTqWbQ428m9/8k0P/1aIhF36PccEl6EhOcAUCrXKZXXWS3XKd2vc/TRBG9O5ELC17MmWubD2nKhUKZa26Ba2+D3P+4/MNCFwg59oWVeYhkzgN/JDR8deKBoD7Y+ljEjGZ0sosXVTvbc6RHirr2reNy1OXd6pJsQ+gqjk8VWFYmHrwBzW/n+uMPFiRwHB2I7ih8ciHFxIkd/3Omk5tCDV1t+2nNu5sxxpDFNx+huNhVT3/zMDz8usXC3ddaHBj1GHj/As08fwTS7Kt1HBTmyN29vdwAw+/wbwLVOJ3uAD1wi/dUH7Qei66PfyuRj4Ik9is+hglfbkbfR3cnZm7chlUWLdwmprtCohX4HUtlOcQjLYCu+fzGJH2QRKvP3UNz8bWk1qMxjGTOMThZ3kvgLI5AzFfo379UAAAAASUVORK5CYII=",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/sign/instruction/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"sign",
+										"instruction",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Record",
+					"item": [
+						{
+							"name": "Create Record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "adult_people_in_group",
+											"value": "2",
+											"description": "Взрослые",
+											"type": "text"
+										},
+										{
+											"key": "children_people_in_group",
+											"value": "1",
+											"description": "Дети дошлкольного возраста",
+											"type": "text"
+										},
+										{
+											"key": "student_in_group",
+											"value": "1",
+											"description": "Студенты очники",
+											"type": "text"
+										},
+										{
+											"key": "tenure",
+											"value": "1",
+											"description": "Срок пребывания",
+											"type": "text"
+										},
+										{
+											"key": "vehicle_id",
+											"value": "0",
+											"type": "text"
+										},
+										{
+											"key": "visit_purpose_id",
+											"value": "1",
+											"description": "Цель посещения",
+											"type": "text"
+										},
+										{
+											"key": "place_of_direction_id",
+											"value": "1",
+											"description": "Место направления",
+											"type": "text"
+										},
+										{
+											"key": "services",
+											"value": "[1,2,3]",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2023-05-02",
+											"type": "text"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-05-03",
+											"type": "text"
+										},
+										{
+											"key": "car_brand",
+											"value": "Autobus",
+											"type": "text"
+										},
+										{
+											"key": "number",
+											"value": "PAS81AS",
+											"type": "text"
+										},
+										{
+											"key": "vehicle_type_id",
+											"value": "2",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/create_record/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"create_record",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Records",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/records",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"records"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Detail Record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/records/26",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"records",
+										"26"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Record QR Image",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/qr_image/26",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"qr_image",
+										"26"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Lists",
+					"item": [
+						{
+							"name": "Visit Purposes",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/visit_purposes/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"visit_purposes",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Vehicle Types",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/vehicle_types/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"vehicle_types",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Place Of Directions",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/place_of_directions/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"place_of_directions",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Tariffs",
+					"item": [
+						{
+							"name": "Get Services",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/services/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"services",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Tariffs",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/tariffs/1",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"tariffs",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Payment",
+					"item": [
+						{
+							"name": "Request Link",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/create/payment/13",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"create",
+										"payment",
+										"13"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save Payment",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\"pg_order_id\": \"11\",\r\n\"pg_payment_id\": \"808280145\",\r\n\"pg_amount\": \"36158.5\",\r\n\"pg_currency\": \"KZT\",\r\n\"pg_net_amount\": \"34892.95\",\r\n\"pg_ps_amount\": \"36158.5\",\r\n\"pg_ps_full_amount\": \"36158.5\",\r\n\"pg_ps_currency\": \"KZT\",\r\n\"pg_description\": \"Оплата посещения национального парка\",\r\n\"pg_result\": \"1\",\r\n\"pg_payment_date\": \"2023-05-05 01:10:38\",\r\n\"pg_can_reject\": \"1\",\r\n\"pg_user_phone\": \"77076455555\",\r\n\"pg_need_phone_notification\": \"0\",\r\n\"pg_user_contact_email\": \"jdads@sds.sd\",\r\n\"pg_need_email_notification\": \"1\",\r\n\"pg_testing_mode\": \"1\",\r\n\"pg_payment_method\": \"bankcard\",\r\n\"pg_captured\": \"1\",\r\n\"pg_card_pan\": \"4111-11XX-XXXX-1111\",\r\n\"pg_card_exp\": \"12/24\",\r\n\"pg_card_owner\": \"qweqw qweqwe\",\r\n\"pg_auth_code\": \"123456\",\r\n\"pg_card_brand\": \"VI\",\r\n\"request_method\": \"POST\",\r\n\"pg_salt\": \"llAMvzLnHEGReUQS\",\r\n\"pg_sig\": \"1a5fcfcba2b404822733fda1a10b7bc3\"\r\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/payment",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"payment"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vehicle",
+					"item": [
+						{
+							"name": "User Vehicles",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"vehicle_type_id\": 2\r\n}"
+								},
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/user/vehicles",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"user",
+										"vehicles"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/user/me",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"user",
+								"me"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Manager",
+			"item": [
+				{
+					"name": "Record",
+					"item": [
+						{
+							"name": "Records",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/manager/records",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"manager",
+										"records"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "formdata",
+									"formdata": [
+										{
+											"key": "adult_people_in_group",
+											"value": "2",
+											"type": "text"
+										},
+										{
+											"key": "children_people_in_group",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "student_in_group",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "tenure",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "vehicle_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "visit_purpose_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "place_of_direction_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "services",
+											"value": "[1,2,3]",
+											"type": "text"
+										},
+										{
+											"key": "start_date",
+											"value": "2023-05-02",
+											"type": "text"
+										},
+										{
+											"key": "end_date",
+											"value": "2023-05-03",
+											"type": "text"
+										},
+										{
+											"key": "manager_price",
+											"value": "645",
+											"type": "text"
+										},
+										{
+											"key": "organization_id",
+											"value": "1",
+											"type": "text"
+										},
+										{
+											"key": "user_id",
+											"value": "17",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/manager/records/create",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"manager",
+										"records",
+										"create"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Record",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{access_token}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text"
+									},
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"url": {
+									"raw": "{{apiUrl}}/api/v1/manager/records/13/delete",
+									"host": [
+										"{{apiUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"manager",
+										"records",
+										"13",
+										"delete"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Me",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/manager/me",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"manager",
+								"me"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search By IIN",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"iin\": 940429351326\r\n}"
+						},
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/manager/search/iin?iin=940429351326",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"manager",
+								"search",
+								"iin"
+							],
+							"query": [
+								{
+									"key": "iin",
+									"value": "940429351326"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Security",
+			"item": [
+				{
+					"name": "Check QR",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{access_token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{apiUrl}}/api/v1/security/scan_qr/be4c1bd7-060b-4acf-b54e-09bcb3967309",
+							"host": [
+								"{{apiUrl}}"
+							],
+							"path": [
+								"api",
+								"v1",
+								"security",
+								"scan_qr",
+								"be4c1bd7-060b-4acf-b54e-09bcb3967309"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "apiUrl",
+			"value": "https://api.iqonak.kz",
+			"type": "string"
+		},
+		{
+			"key": "access_token",
+			"value": "",
+			"type": "string"
+		}
+	]
+}

@@ -12,11 +12,19 @@ class RegisterController extends Controller
 {
     private $userService;
 
+    /**
+     * @param UserServiceContract $userService
+     */
     public function __construct(UserServiceContract $userService)
     {
         $this->userService = $userService;
     }
 
+    /**
+     * Method returns sign up of this project
+     * @param RegisterRequest $request
+     * @return User
+     */
     public function signUp(RegisterRequest $request)
     {
         return $this->userService->registerUser($request->validated());

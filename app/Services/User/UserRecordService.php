@@ -14,8 +14,17 @@ use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserRecordService implements UserRecordServiceContract
 {
+    /**
+     * Method added record with tariff
+     * @param Organization $organization
+     * @param User $user
+     * @param array $data
+     * @return mixed
+     * @throws \Exception
+     */
     public function createRecord(Organization $organization, User $user, array $data)
     {
+        //TODO Refactor to simple way by service pipeline
         $data['user_id'] = $user->id;
         $data['organization_id'] = $organization->id;
         $data['record_status_id'] = 1;
@@ -89,6 +98,12 @@ class UserRecordService implements UserRecordServiceContract
         return $record;
     }
 
+    /**
+     * Method returns user records
+     * @param User $user
+     * @param array $data
+     * @return LengthAwarePaginator
+     */
     public function getUserRecords(User $user, array $data): LengthAwarePaginator
     {
         $query = Record::query();
@@ -103,6 +118,11 @@ class UserRecordService implements UserRecordServiceContract
         return $query->paginate(50);
     }
 
+    /**
+     * Method creates vehicle
+     * @param array $data
+     * @return Vehicle
+     */
     public function createVehicle(array $data): Vehicle
     {
         return Vehicle::create($data);

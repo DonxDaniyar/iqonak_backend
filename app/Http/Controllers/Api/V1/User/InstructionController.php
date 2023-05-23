@@ -7,8 +7,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\User\SignInstructionRequest;
 use App\Models\Instruction;
 use F9Web\ApiResponseHelpers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Js;
 
 class InstructionController extends Controller
 {
@@ -16,16 +18,31 @@ class InstructionController extends Controller
 
     private $signInstructionService;
 
+    /**
+     * @param SignInstructionContract $signInstructionService
+     */
     public function __construct(SignInstructionContract $signInstructionService)
     {
         $this->signInstructionService = $signInstructionService;
     }
 
-    public function getInstruction(Instruction $instruction)
+    /**
+     * Method returns instructions
+     * @param Instruction $instruction
+     * @return JsonResponse
+     */
+    public function getInstruction(Instruction $instruction): JsonResponse
     {
         return $this->respondWithSuccess($instruction);
     }
-    public function signInstruction(Instruction $instruction, SignInstructionRequest $request)
+
+    /**
+     * Methods signs instruction by user
+     * @param Instruction $instruction
+     * @param SignInstructionRequest $request
+     * @return JsonResponse
+     */
+    public function signInstruction(Instruction $instruction, SignInstructionRequest $request): JsonResponse
     {
         return $this->respondWithSuccess($this->signInstructionService->signInstruction(Auth::user(), $instruction, $request->validated()));
     }

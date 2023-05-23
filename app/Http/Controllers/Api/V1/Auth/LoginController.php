@@ -19,6 +19,12 @@ class LoginController extends Controller
     {
         $this->userService = $userService;
     }
+
+    /**
+     * Sign in method
+     * @param LoginRequest $request
+     * @return JsonResponse
+     */
     public function signIn(LoginRequest $request): JsonResponse
     {
         try {
@@ -30,12 +36,22 @@ class LoginController extends Controller
             return $this->respondError($e->getMessage());
         }
     }
+
+    /**
+     * Sign out method
+     * @return JsonResponse
+     */
     public function logout(): JsonResponse
     {
         Auth::user()->tokens()->delete();
         return $this->respondWithSuccess();
     }
-    public function getMe()
+
+    /**
+     * Get User Information
+     * @return JsonResponse
+     */
+    public function getMe(): JsonResponse
     {
         return $this->respondWithSuccess(UserResource::make(User::with('roles')
                 ->where('id', auth()->id())

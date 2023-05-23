@@ -12,15 +12,30 @@ class PaymentApiController extends Controller
 {
     private $paymentService;
 
+    /**
+     * @param PaymentServiceContract $paymentService
+     */
     public function __construct(PaymentServiceContract $paymentService)
     {
         $this->paymentService = $paymentService;
     }
 
+    /**
+     * Method creates link to payment to Paybox system
+     * @param Record $record
+     * @param Request $request
+     * @return mixed
+     */
     public function request_link(Record $record, Request $request)
     {
         return $this->paymentService->request_link($record, $request);
     }
+
+    /**
+     * Method saves payment
+     * @param Request $request
+     * @return mixed
+     */
     public function save_payment(Request $request)
     {
         $request->validate([
@@ -50,7 +65,7 @@ class PaymentApiController extends Controller
                 'payment_description' => $request->pg_description
             ]);
 
-            //Ответ в формате xml для paybox
+            //Response to paybox system
             $responseData = [
                 'pg_salt' => $request->pg_salt,
                 'pg_sig' => $request->pg_sig,

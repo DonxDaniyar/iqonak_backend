@@ -12,7 +12,5 @@ use Modules\Payment\Models\Order;
 
 class PaymentController extends Controller
 {
-    protected $mercaht_id = 542439;
 
-    protected $secret_key = 'xEPlWCarA63QOIEE';
 }
